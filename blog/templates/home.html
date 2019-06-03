@@ -1,0 +1,30 @@
+home!
+{% for blog in posts %}
+
+{% if user.is_authenticated %}
+
+<form id="logout" method="POST" action="{%url 'logout'%}">
+    {% csrf_token %}
+    <input class="btn btn-primary" type="submit"
+value="Logout" />
+</form>
+
+환영합니다.  {{ user.username }} 님
+{% else %}
+<a href="{%url 'login'%}">로그인</a>
+<a href="{%url 'signup'%}">회원가입</a>
+{% endif %}
+
+{%if posts.has_previous%}
+    <a href="?page=1">First</a>
+    <a href="?page={{posts.previous_page_number}}">Previous</a>
+    {%endif%}
+
+    <span>{{posts.number}}</span>
+    <span>of</span>
+    <span>{{posts.paginator.num_pages}}</span>
+
+    {%if posts.has_next%}
+    <a href="?page={{posts.next_page_number}}">Next</a>
+    <a href="?page={{posts.paginator.num_pages}}">Last</a>
+    {%endif%}
